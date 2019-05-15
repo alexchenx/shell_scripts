@@ -9,7 +9,8 @@ date=`date +%Y-%m-%d\ %H:%M:%S`
 # flag value explain:
 # 0. tomcat is stopped.
 # 1. tomcat is running.
-# 2. tomcat port is closed, but process still running.
+# 2. tomcat is running, but process count more than 1
+# 3. tomcat port is closed, but process still running.
 flag=0
 
 start() {
@@ -19,6 +20,8 @@ start() {
         elif [ ${flag} -eq 1 ]; then
                 exit
         elif [ ${flag} -eq 2 ]; then
+                exit
+        elif [ ${flag} -eq 3 ]; then
                 stop
                 ${tomcat_home}/bin/startup.sh
         fi
@@ -58,9 +61,12 @@ status() {
         elif [ ${count_listen} == 1 ] && [ ${count_ps} -eq 1 ]; then
                 echo "[${date}] tomcat is running."
                 flag=1
+        elif [ ${count_listen} == 1 ] && [ ${count_ps} -ge 1 ]; then
+                echo "[{$date}] tomcat is running, but process count more than 1, now is ${count_ps}."
+                flag=2
         elif [ ${count_listen} == 0 ] && [ ${count_ps} -ge 1 ]; then
                 echo "[${date}] tomcat port is closed, but process still running."
-                flag=2
+                flag=3
         fi
 }
 
