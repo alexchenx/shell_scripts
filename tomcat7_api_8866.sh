@@ -36,7 +36,7 @@ stop() {
                 status
                 if [ ${flag} -ne 0 ]; then
                         echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat process still running after shutdown.sh, let's kill it."
-                        ps aux|grep ${tomcat_home}|grep -v grep|awk '{print $2}'|xargs kill -9
+                        ps aux|grep "${tomcat_home}"|grep -v grep|awk '{print $2}'|xargs kill -9
                         sleep 3
                         status
                 fi
@@ -62,7 +62,7 @@ status() {
                 echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat is running."
                 flag=1
         elif [ ${count_listen} == 1 ] && [ ${count_ps} -ge 1 ]; then
-                echo "[{$date}] tomcat is running, but process count more than 1, now is ${count_ps}."
+                echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat is running, but process count more than 1, now is ${count_ps}."
                 flag=2
         elif [ ${count_listen} == 0 ] && [ ${count_ps} -ge 1 ]; then
                 echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat port is closed, but process still running."
