@@ -44,7 +44,6 @@ stop() {
                         echo "[${date}] tomcat                            [ stopped ]"
                 else
                         echo "[${date}] tomcat                            [ failed ]"
-
                 fi
         fi
 }
