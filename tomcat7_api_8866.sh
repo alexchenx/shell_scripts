@@ -4,9 +4,6 @@ tomcat_home=/data/app/tomcat7-api-8866
 tomcat_port=8866
 
 log=$tomcat_home/logs/catalina.out
-if [ ! -f ${log} ]; then
-        log=$tomcat_home/logs/catalina.`date +%Y-%m-%d`.out
-fi
 date=`date +%Y-%m-%d\ %H:%M:%S`
 
 # flag value explain:
