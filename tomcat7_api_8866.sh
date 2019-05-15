@@ -5,7 +5,6 @@ tomcat_home=/data/app/tomcat7-api-8866
 tomcat_port=8866
 
 log=$tomcat_home/logs/catalina.out
-date=`date +%Y-%m-%d\ %H:%M:%S`
 
 # flag value explain:
 # 0. tomcat is stopped.
@@ -36,18 +35,18 @@ stop() {
 
                 status
                 if [ ${flag} -ne 0 ]; then
-                        echo "[${date}] tomcat process still running after shutdown.sh, let's kill it."
+                        echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat process still running after shutdown.sh, let's kill it."
                         ps aux|grep ${tomcat_home}|grep -v grep|awk '{print $2}'|xargs kill -9
                         sleep 3
                         status
                 fi
                 if [ ${flag} -eq 0 ]; then
-                        echo "[${date}] Clean work cache..."
+                        echo "[$(date +%Y-%m-%d\ %H:%M:%S)] Clean work cache..."
                         rm -rf $tomcat_home/work/Catalina/*
-                        echo "[${date}] Clean cache done."
-                        echo "[${date}] tomcat                            [ stopped ]"
+                        echo "[$(date +%Y-%m-%d\ %H:%M:%S)] Clean cache done."
+                        echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat                            [ stopped ]"
                 else
-                        echo "[${date}] tomcat                            [ failed ]"
+                        echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat                            [ failed ]"
                 fi
         fi
 }
@@ -57,16 +56,16 @@ status() {
         count_ps=`ps aux|grep "${tomcat_home}"|grep java|grep -v grep|wc -l`
 
         if [ ${count_listen} == 0 ] && [ ${count_ps} == 0 ]; then
-                echo "[${date}] tomcat is stopped."
+                echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat is stopped."
                 flag=0
         elif [ ${count_listen} == 1 ] && [ ${count_ps} -eq 1 ]; then
-                echo "[${date}] tomcat is running."
+                echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat is running."
                 flag=1
         elif [ ${count_listen} == 1 ] && [ ${count_ps} -ge 1 ]; then
                 echo "[{$date}] tomcat is running, but process count more than 1, now is ${count_ps}."
                 flag=2
         elif [ ${count_listen} == 0 ] && [ ${count_ps} -ge 1 ]; then
-                echo "[${date}] tomcat port is closed, but process still running."
+                echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat port is closed, but process still running."
                 flag=3
         fi
 }
