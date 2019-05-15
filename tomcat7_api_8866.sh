@@ -40,6 +40,7 @@ stop() {
                                 echo "[${date}] Clean work cache..."
                                 rm -rf $tomcat_home/work/Catalina/*
                                 echo "[${date}] Clean cache done."
+                                echo "[${date}] tomcat                            [ stopped ]"
                         else
                                 echo "[${date}] tomcat                            [ failed ]"
 
@@ -49,8 +50,8 @@ stop() {
 }
 
 status() {
-        count_listen=`netstat -natp|grep ${tomcat_port}|grep "LISTEN"|wc -l`
-        count_ps=`ps aux|grep ${tomcat_home}|grep java|grep -v grep|wc -l`
+        count_listen=`netstat -natp|grep ":${tomcat_port}"|grep "LISTEN"|wc -l`
+        count_ps=`ps aux|grep "${tomcat_home}"|grep java|grep -v grep|wc -l`
 
         if [ ${count_listen} == 0 ] && [ ${count_ps} == 0 ]; then
                 echo "[${date}] tomcat is stopped."
