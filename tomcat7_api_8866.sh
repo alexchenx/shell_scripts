@@ -1,4 +1,5 @@
 #!/bin/bash
+source /etc/profile
 
 tomcat_home=/data/app/tomcat7-api-8866
 tomcat_port=8866
