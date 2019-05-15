@@ -36,15 +36,15 @@ stop() {
                         ps aux|grep ${tomcat_home}|grep -v grep|awk '{print $2}'|xargs kill -9
                         sleep 3
                         status
-                        if [ ${flag} -eq 0 ]; then
-                                echo "[${date}] Clean work cache..."
-                                rm -rf $tomcat_home/work/Catalina/*
-                                echo "[${date}] Clean cache done."
-                                echo "[${date}] tomcat                            [ stopped ]"
-                        else
-                                echo "[${date}] tomcat                            [ failed ]"
+                fi
+                if [ ${flag} -eq 0 ]; then
+                        echo "[${date}] Clean work cache..."
+                        rm -rf $tomcat_home/work/Catalina/*
+                        echo "[${date}] Clean cache done."
+                        echo "[${date}] tomcat                            [ stopped ]"
+                else
+                        echo "[${date}] tomcat                            [ failed ]"
 
-                        fi
                 fi
         fi
 }
