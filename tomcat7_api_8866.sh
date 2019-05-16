@@ -1,10 +1,17 @@
 #!/bin/bash
 source /etc/profile
 
+# Please modify tomcat_home when you deploy new tomcat, must be like tomcat7-api-8866
 tomcat_home=/data/app/tomcat7-api-8866
-tomcat_port=8866
+
+
+tomcat_port=${tomcat_home##*-}
+echo ${tomcat_port} |grep "[^0-9]" > /dev/null && echo "[$(date +%Y-%m-%d\ %H:%M:%S)] tomcat_port must be number, please check it, current tomcat_port=${tomcat_port}" && exit
 
 log=$tomcat_home/logs/catalina.out
+if [ ! -f ${log} ]; then
+        log=$tomcat_home/logs/catalina.$(date +%Y-%m-%d).out
+fi
 
 # flag value explain:
 # 0. tomcat is stopped.
